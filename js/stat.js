@@ -44,18 +44,19 @@ window.renderStatistics = function (ctx, players, times) {
   // TEMP:
   ctx.fillStyle = '#000';
   var players = ['Вы', 'Кекс', 'Енот', 'Рудольф'];
-  var times = [1300, 2000, 1500, 700];
+  var times = [530.10, 2000.123, 1524.66, 700.10000];
 
   ctx.font = FONT_SIZE + 'px/' + LINE_HEIGHT + ' PT Mono';
   ctx.fillText('Ура вы победили!', CLOUD_X + GAP, CLOUD_Y + GAP + HEADING_GAP);
   ctx.fillText('Список результатов:', CLOUD_X + GAP, CLOUD_Y + GAP + HEADING_GAP + fontHeight);
 
-  var maxTime = getMaxEl(times);
+  var maxTime = Math.round(getMaxEl(times));
 
   for (var i = 0; i < players.length; i++) {
     // BAR_MAX - barHeight
     // BAR[i] - x
     // x = BAR[i] * barHeight / BAR_MAX
+    times[i] = Math.round(times[i]);
     var currentBarHeight = times[i] * barHeight / maxTime;
 
     ctx.fillStyle = '#000';
