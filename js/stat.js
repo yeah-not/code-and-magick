@@ -4,6 +4,7 @@
 var canvas = document.querySelector('.demo .canvas');
 var ctx = canvas.getContext('2d');
 
+<<<<<<< HEAD
 var CLOUD_WIDTH = 420;
 var CLOUD_HEIGHT = 270;
 var CLOUD_X = 200;
@@ -13,6 +14,16 @@ var GAP = 10;
 var FONT_GAP = 15;
 var TEXT_WIDTH = 50;
 var BAR_HEIGHT = 20;
+=======
+var CLOUD_WIDTH = 500,
+    CLOUD_HEIGHT = 200,
+    CLOUD_X = 100,
+    CLOUD_Y = 50,
+    GAP = 10,
+    FONT_GAP = 15,
+    TEXT_WIDTH = 50,
+    BAR_HEIGHT = 20;
+>>>>>>> parent of 37e83ef... Убрал тестовые данные, канвас - используются из game.js
 
 var barWidth = CLOUD_WIDTH - GAP * 2 - TEXT_WIDTH;
 var arcsNum = Math.floor(CLOUD_WIDTH / (ARC_RADIUS * 2));
@@ -24,6 +35,7 @@ console.log(realWidth);
 var renderCloud = function (ctx, x, y, color) {
   ctx.fillStyle = color;
   ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
+<<<<<<< HEAD
 
   ctx.fillStyle = '#aaa';
   ctx.beginPath();
@@ -45,6 +57,9 @@ var renderCloud = function (ctx, x, y, color) {
   // ctx.stroke();
   ctx.fill();
 };
+=======
+}
+>>>>>>> parent of 37e83ef... Убрал тестовые данные, канвас - используются из game.js
 
 var getMaxEl = function (arr) {
   var maxEl = arr[0];
@@ -56,7 +71,7 @@ var getMaxEl = function (arr) {
   }
 
   return maxEl;
-};
+}
 
 window.renderStatistics = function (ctx, players, times) {
   // renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.3)');
@@ -64,9 +79,14 @@ window.renderStatistics = function (ctx, players, times) {
 
   // TEMP:
   ctx.fillStyle = '#000';
+<<<<<<< HEAD
   ctx.font = '16px PT Mono';
   var players = ['Вы', 'Кекс', 'Енот', 'Рудольф'];
   var times = [1300, 2000, 1500, 700];
+=======
+  var players = ['Вы', 'Кекс', 'Енот', 'Рудольф']; // temp
+  var times = [1300, 2000, 1500, 700]; // TEMP:
+>>>>>>> parent of 37e83ef... Убрал тестовые данные, канвас - используются из game.js
 
   var maxTime = getMaxEl(times);
 
