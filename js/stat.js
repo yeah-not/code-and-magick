@@ -58,9 +58,18 @@ window.renderStatistics = function (ctx, players, times) {
     // x = BAR[i] * barHeight / BAR_MAX
     var currentBarHeight = times[i] * barHeight / maxTime;
 
+    ctx.fillStyle = '#000';
     ctx.fillText(players[i], CLOUD_X + GAP + BAR_WIDTH * 2 * i, CLOUD_Y + CLOUD_HEIGHT - GAP);
-    ctx.fillRect(CLOUD_X + GAP + BAR_WIDTH * 2 * i, CLOUD_Y + (CLOUD_HEIGHT - GAP - currentBarHeight - fontHeight), BAR_WIDTH, currentBarHeight);
     ctx.fillText(times[i], CLOUD_X + GAP + BAR_WIDTH * 2 * i, CLOUD_Y + CLOUD_HEIGHT - GAP - currentBarHeight - fontHeight - BAR_TEXT_GAP);
+
+    if (i === 0) {
+      ctx.fillStyle = 'rgba(255, 0, 0, 1)';
+    } else {
+      var saturation = Math.round(Math.random() * 100);
+      ctx.fillStyle = 'hsl(240, ' + saturation + '%, 50%)';
+    }
+
+    ctx.fillRect(CLOUD_X + GAP + BAR_WIDTH * 2 * i, CLOUD_Y + (CLOUD_HEIGHT - GAP - currentBarHeight - fontHeight), BAR_WIDTH, currentBarHeight);
   }
 };
 
