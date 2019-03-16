@@ -4,21 +4,27 @@ var getRandomInt = function (min, max) {
   return Math.floor(Math.random() * (max + 1 - min)) + min;
 };
 
-var getWizard = function () {
+var getWizard = function (data) {
   var wizard = {
-    name: FIRST_NAMES[getRandomInt(0, FIRST_NAMES.length - 1)] + ' ' + SECOND_NAMES[getRandomInt(0, SECOND_NAMES.length - 1)],
-    coatColor: COAT_COLORS[getRandomInt(0, COAT_COLORS.length - 1)],
-    eyesColor: EYES_COLORS[getRandomInt(0, EYES_COLORS.length - 1)]
+    name: data.firstName + ' ' + data.secondName,
+    coatColor: data.coatColor,
+    eyesColor: data.eyesColor
   };
 
   return wizard;
 };
 
-var getWizards = function (num) {
+var getWizards = function (num, data) {
   var wizards = [];
 
   for (var i = 0; i < num; i++) {
-    wizards[i] = getWizard();
+    var wizardData = {
+      firstName: data.firstNames[getRandomInt(0, FIRST_NAMES.length - 1)],
+      secondName: data.secondNames[getRandomInt(0, SECOND_NAMES.length - 1)],
+      coatColor: data.coatColors[getRandomInt(0, COAT_COLORS.length - 1)],
+      eyesColor: data.eyesColors[getRandomInt(0, EYES_COLORS.length - 1)]
+    };
+    wizards[i] = getWizard(wizardData);
   }
 
   return wizards;
@@ -50,6 +56,13 @@ var COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161
 var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
 var WIZARDS_NUM = 4;
 
+var wizardsData = {
+  firstNames: FIRST_NAMES,
+  secondNames: SECOND_NAMES,
+  coatColors: COAT_COLORS,
+  eyesColors: EYES_COLORS
+};
+
 var setupDialog = document.querySelector('.setup');
 setupDialog.classList.remove('hidden');
 
@@ -57,6 +70,6 @@ var similarContainer = document.querySelector('.setup-similar');
 var similarListElement = similarContainer.querySelector('.setup-similar-list');
 var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 
-var wizards = getWizards(WIZARDS_NUM);
+var wizards = getWizards(WIZARDS_NUM, wizardsData);
 similarListElement.appendChild(renderWizards(wizards, similarWizardTemplate));
 similarContainer.classList.remove('hidden');
