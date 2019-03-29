@@ -50,6 +50,9 @@ var renderWizards = function (wizards, template) {
   return fragment;
 };
 
+var ENTER_KEYCODE = 13;
+var ESC_KEYCODE = 27;
+
 var FIRST_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
 var SECOND_NAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
 var COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
@@ -64,7 +67,37 @@ var wizardsData = {
 };
 
 var setupDialog = document.querySelector('.setup');
-setupDialog.classList.remove('hidden');
+var setupDialogOpen = document.querySelector('.setup-open');
+var setupDialogClose = setupDialog.querySelector('.setup-close');
+
+var openSetupDialog = function () {
+  setupDialog.classList.remove('hidden');
+};
+
+var closeSetupDialog = function () {
+  setupDialog.classList.add('hidden');
+};
+
+setupDialogOpen.addEventListener('click', function () {
+  openSetupDialog();
+});
+
+setupDialogOpen.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    openSetupDialog();
+  }
+});
+
+setupDialogClose.addEventListener('click', function () {
+  closeSetupDialog();
+});
+
+setupDialogClose.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    closeSetupDialog();
+  }
+});
+
 
 var similarContainer = document.querySelector('.setup-similar');
 var similarListElement = similarContainer.querySelector('.setup-similar-list');
