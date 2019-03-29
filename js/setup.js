@@ -70,12 +70,20 @@ var setupDialog = document.querySelector('.setup');
 var setupDialogOpen = document.querySelector('.setup-open');
 var setupDialogClose = setupDialog.querySelector('.setup-close');
 
+var keyEscDownHandler = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closeSetupDialog();
+  }
+};
+
 var openSetupDialog = function () {
   setupDialog.classList.remove('hidden');
+  document.addEventListener('keydown', keyEscDownHandler);
 };
 
 var closeSetupDialog = function () {
   setupDialog.classList.add('hidden');
+  document.removeEventListener('keydown', keyEscDownHandler);
 };
 
 setupDialogOpen.addEventListener('click', function () {
