@@ -71,6 +71,7 @@ var setupDialogOpen = document.querySelector('.setup-open');
 var setupDialogClose = setupDialog.querySelector('.setup-close');
 var userNameInput = setupDialog.querySelector('.setup-user-name');
 
+// Открытие/закрытие окна настройки персонажа
 var keyEscDownHandler = function (evt) {
   if (evt.keyCode === ESC_KEYCODE && evt.target !== userNameInput) {
     closeSetupDialog();
@@ -107,7 +108,43 @@ setupDialogClose.addEventListener('keydown', function (evt) {
   }
 });
 
+// Вылидация настроек персонажа на ввод
+userNameInput.addEventListener('input', function (evt) {
+  var target = evt.target;
+  if (target.validity.tooShort || target.validity.tooLong) {
+    target.setCustomValidity('Поле должно содержать от 2 до 25 символов');
+  } else if (target.validity.valueMissing) {
+    target.setCustomValidity('Обязательное поле');
+  } else {
+    target.setCustomValidity('');
+  }
+  target.reportValidity();
+});
 
+// // Вылидация настроек персонажа на отправку
+// userNameInput.addEventListener('invalid', function (evt) {
+//   var target = evt.target;
+//   if (target.validity.tooShort || target.validity.tooLong) {
+//     target.setCustomValidity('Поле должно содержать от 2 до 25 символов');
+//   } else if (target.validity.valueMissing) {
+//     target.setCustomValidity('Обязательное поле');
+//   } else {
+//     target.setCustomValidity('');
+//   }
+// });
+
+// Вылидация настроек персонажа на ввод - альтернатива
+// userNameInput.addEventListener('input', function (evt) {
+//   var target = evt.target;
+//   if (target.value.length < 2 || target.value.length > 25 ) {
+//     target.setCustomValidity('Поле должно содержать от 2 до 25 символов');
+//   } else if (target.value.length === 0) {
+//     target.setCustomValidity('Обязательное поле');
+//   } else {
+//     target.setCustomValidity('');
+//   }
+//   target.reportValidity();
+// });
 
 
 
