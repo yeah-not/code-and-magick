@@ -57,6 +57,7 @@ var FIRST_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'К�
 var SECOND_NAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
 var COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
 var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
+var FIREBALL_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 var WIZARDS_NUM = 4;
 
 var wizardsData = {
@@ -121,31 +122,41 @@ userNameInput.addEventListener('input', function (evt) {
   target.reportValidity();
 });
 
-// // Вылидация настроек персонажа на отправку
-// userNameInput.addEventListener('invalid', function (evt) {
-//   var target = evt.target;
-//   if (target.validity.tooShort || target.validity.tooLong) {
-//     target.setCustomValidity('Поле должно содержать от 2 до 25 символов');
-//   } else if (target.validity.valueMissing) {
-//     target.setCustomValidity('Обязательное поле');
-//   } else {
-//     target.setCustomValidity('');
-//   }
-// });
+// Изменение цвета элементов персонажа по нажатию
+var wizardSetup = document.querySelector('.setup-wizard');
+var wizardCoat = wizardSetup.querySelector('.wizard-coat');
+var wizardEyes = wizardSetup.querySelector('.wizard-eyes');
+var wizardFireball = setupDialog.querySelector('.setup-fireball-wrap');
+var coatColorInput = setupDialog.querySelector('input[name=coat-color]');
+var eyesColorInput = setupDialog.querySelector('input[name=eyes-color]');
+var fireballColorInput = setupDialog.querySelector('input[name=fireball-color]');
 
-// Вылидация настроек персонажа на ввод - альтернатива
-// userNameInput.addEventListener('input', function (evt) {
-//   var target = evt.target;
-//   if (target.value.length < 2 || target.value.length > 25 ) {
-//     target.setCustomValidity('Поле должно содержать от 2 до 25 символов');
-//   } else if (target.value.length === 0) {
-//     target.setCustomValidity('Обязательное поле');
-//   } else {
-//     target.setCustomValidity('');
-//   }
-//   target.reportValidity();
-// });
+// TEMP:
+// setupDialog.classList.remove('hidden');
 
+wizardCoat.addEventListener('click', function (evt) {
+  var target = evt.target;
+  var color = COAT_COLORS[getRandomInt(0, COAT_COLORS.length - 1)];
+
+  target.style.fill = color;
+  coatColorInput.value = color;
+});
+
+wizardEyes.addEventListener('click', function (evt) {
+  var target = evt.target;
+  var color = EYES_COLORS[getRandomInt(0, EYES_COLORS.length - 1)];
+
+  target.style.fill = color;
+  eyesColorInput.value = color;
+});
+
+wizardFireball.addEventListener('click', function (evt) {
+  var target = evt.target;
+  var color = FIREBALL_COLORS[getRandomInt(0, FIREBALL_COLORS.length - 1)];
+
+  target.style.backgroundColor = color;
+  fireballColorInput.value = color;
+});
 
 
 var similarContainer = document.querySelector('.setup-similar');
