@@ -69,9 +69,10 @@ var wizardsData = {
 var setupDialog = document.querySelector('.setup');
 var setupDialogOpen = document.querySelector('.setup-open');
 var setupDialogClose = setupDialog.querySelector('.setup-close');
+var userNameInput = setupDialog.querySelector('.setup-user-name');
 
 var keyEscDownHandler = function (evt) {
-  if (evt.keyCode === ESC_KEYCODE) {
+  if (evt.keyCode === ESC_KEYCODE && evt.target !== userNameInput) {
     closeSetupDialog();
   }
 };
@@ -105,6 +106,9 @@ setupDialogClose.addEventListener('keydown', function (evt) {
     closeSetupDialog();
   }
 });
+
+
+
 
 
 var similarContainer = document.querySelector('.setup-similar');
