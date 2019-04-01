@@ -68,7 +68,9 @@ var renderWizards = function (wizards, template) {
 
 // Обрабочики
 // ---------------
-var openSetup = function () {
+var openSetup = function (evt) {
+  evt.preventDefault();
+
   // Обработчики попапа
   setupClose.addEventListener('click', closeSetup);
   setupClose.addEventListener('keydown', setupCloseEnterPressHandler);
@@ -85,7 +87,8 @@ var openSetup = function () {
   setup.classList.remove('hidden');
 };
 
-var closeSetup = function () {
+var closeSetup = function (evt) {
+  evt.preventDefault();
   setup.classList.add('hidden');
 
   // Обработчики попапа
@@ -105,19 +108,19 @@ var closeSetup = function () {
 // Открытие/закрытие окна настройки персонажа
 var setupEscPressDocHandler = function (evt) {
   if (evt.keyCode === ESC_KEYCODE && evt.target !== userName) {
-    closeSetup();
+    closeSetup(evt);
   }
 };
 
 var setupOpenEnterPressHandler = function (evt) {
   if (evt.keyCode === ENTER_KEYCODE) {
-    openSetup();
+    openSetup(evt);
   }
 };
 
 var setupCloseEnterPressHandler = function (evt) {
   if (evt.keyCode === ENTER_KEYCODE) {
-    closeSetup();
+    closeSetup(evt);
   }
 };
 
