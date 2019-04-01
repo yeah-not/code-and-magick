@@ -18,6 +18,18 @@ var getRandomInt = function (min, max) {
   return Math.floor(Math.random() * (max + 1 - min)) + min;
 };
 
+var randomizeFillColor = function (element, colors) {
+  var color = colors[getRandomInt(0, colors.length - 1)];
+  element.style.fill = color;
+  return color;
+};
+
+var randomizeBgColor = function (element, colors) {
+  var color = colors[getRandomInt(0, colors.length - 1)];
+  element.style.backgroundColor = color;
+  return color;
+};
+
 // Функции
 // ---------------
 var getWizard = function (data) {
@@ -139,27 +151,15 @@ var userNameInputHandler = function (evt) {
 
 // Изменение цвета элементов персонажа по нажатию
 var wizardCoatClickHandler = function (evt) {
-  var target = evt.target;
-  var color = COAT_COLORS[getRandomInt(0, COAT_COLORS.length - 1)];
-
-  target.style.fill = color;
-  coatColorInput.value = color;
+  coatColorInput.value = randomizeFillColor(evt.target, COAT_COLORS);
 };
 
 var wizardEyesClickHandler = function (evt) {
-  var target = evt.target;
-  var color = EYES_COLORS[getRandomInt(0, EYES_COLORS.length - 1)];
-
-  target.style.fill = color;
-  eyesColorInput.value = color;
+  eyesColorInput.value = randomizeFillColor(evt.target, EYES_COLORS);
 };
 
 var wizardFireballClickHandler = function (evt) {
-  var target = evt.target;
-  var color = FIREBALL_COLORS[getRandomInt(0, FIREBALL_COLORS.length - 1)];
-
-  target.style.backgroundColor = color;
-  fireballColorInput.value = color;
+  fireballColorInput.value = randomizeBgColor(evt.target, FIREBALL_COLORS);
 };
 
 // Элементы
