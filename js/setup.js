@@ -1,35 +1,5 @@
 'use strict';
 
-// Константы
-// ---------------
-var ENTER_KEYCODE = 13;
-var ESC_KEYCODE = 27;
-
-var FIRST_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-var SECOND_NAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
-var COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
-var FIREBALL_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
-var WIZARDS_NUM = 4;
-
-// Утилиты
-// ---------------
-var getRandomInt = function (min, max) {
-  return Math.floor(Math.random() * (max + 1 - min)) + min;
-};
-
-var randomizeFillColor = function (element, colors) {
-  var color = colors[getRandomInt(0, colors.length - 1)];
-  element.style.fill = color;
-  return color;
-};
-
-var randomizeBgColor = function (element, colors) {
-  var color = colors[getRandomInt(0, colors.length - 1)];
-  element.style.backgroundColor = color;
-  return color;
-};
-
 // Функции
 // ---------------
 var getWizard = function (data) {
@@ -80,61 +50,7 @@ var renderWizards = function (wizards, template) {
 
 // Обрабочики
 // ---------------
-var openSetup = function (evt) {
-  evt.preventDefault();
 
-  // Обработчики попапа
-  setupClose.addEventListener('click', closeSetup);
-  setupClose.addEventListener('keydown', setupCloseEnterPressHandler);
-  document.addEventListener('keydown', setupEscPressDocHandler);
-  setupOpen.removeEventListener('click', openSetup);
-  setupOpen.removeEventListener('keydown', setupOpenEnterPressHandler);
-  // Обрабочики валидации
-  userName.addEventListener('input', userNameInputHandler);
-  // Обработчики цвета персонажа
-  wizardCoat.addEventListener('click', wizardCoatClickHandler);
-  wizardEyes.addEventListener('click', wizardEyesClickHandler);
-  wizardFireball.addEventListener('click', wizardFireballClickHandler);
-
-  setup.classList.remove('hidden');
-};
-
-var closeSetup = function (evt) {
-  evt.preventDefault();
-  setup.classList.add('hidden');
-
-  // Обработчики попапа
-  setupClose.removeEventListener('click', closeSetup);
-  setupClose.removeEventListener('keydown', setupCloseEnterPressHandler);
-  document.removeEventListener('keydown', setupEscPressDocHandler);
-  setupOpen.addEventListener('click', openSetup);
-  setupOpen.addEventListener('keydown', setupOpenEnterPressHandler);
-  // Обрабочики валидации
-  userName.removeEventListener('input', userNameInputHandler);
-  // Обработчики цвета персонажа
-  wizardCoat.removeEventListener('click', wizardCoatClickHandler);
-  wizardEyes.removeEventListener('click', wizardEyesClickHandler);
-  wizardFireball.removeEventListener('click', wizardFireballClickHandler);
-};
-
-// Открытие/закрытие окна настройки персонажа
-var setupEscPressDocHandler = function (evt) {
-  if (evt.keyCode === ESC_KEYCODE && evt.target !== userName) {
-    closeSetup(evt);
-  }
-};
-
-var setupOpenEnterPressHandler = function (evt) {
-  if (evt.keyCode === ENTER_KEYCODE) {
-    openSetup(evt);
-  }
-};
-
-var setupCloseEnterPressHandler = function (evt) {
-  if (evt.keyCode === ENTER_KEYCODE) {
-    closeSetup(evt);
-  }
-};
 
 // Вылидация настроек персонажа на ввод
 var userNameInputHandler = function (evt) {
@@ -165,8 +81,6 @@ var wizardFireballClickHandler = function (evt) {
 // Элементы
 // ---------------
 var setup = document.querySelector('.setup');
-var setupOpen = document.querySelector('.setup-open');
-var setupClose = setup.querySelector('.setup-close');
 var userName = setup.querySelector('.setup-user-name');
 
 var wizardSetup = document.querySelector('.setup-wizard');
@@ -194,5 +108,18 @@ var wizards = getWizards(WIZARDS_NUM, wizardsData);
 similarListElement.appendChild(renderWizards(wizards, similarWizardTemplate));
 similarContainer.classList.remove('hidden');
 
-setupOpen.addEventListener('click', openSetup);
-setupOpen.addEventListener('keydown', setupOpenEnterPressHandler);
+// TEMP:
+// Обрабочики валидации
+userName.addEventListener('input', userNameInputHandler);
+// Обработчики цвета персонажа
+wizardCoat.addEventListener('click', wizardCoatClickHandler);
+wizardEyes.addEventListener('click', wizardEyesClickHandler);
+wizardFireball.addEventListener('click', wizardFireballClickHandler);
+
+// TEMP:
+// // Обрабочики валидации
+// userName.removeEventListener('input', userNameInputHandler);
+// // Обработчики цвета персонажа
+// wizardCoat.removeEventListener('click', wizardCoatClickHandler);
+// wizardEyes.removeEventListener('click', wizardEyesClickHandler);
+// wizardFireball.removeEventListener('click', wizardFireballClickHandler);
