@@ -1,16 +1,17 @@
 'use strict';
-(function () {
-  // Управление окном настройки персонажа
 
+// Управление окном настройки персонажа
+// ---------------
+
+(function () {
   // Функции
   // ---------------
-
   // Открытие/закрытие
   var openSetup = function () {
     setupClose.addEventListener('click', setupCloseClickHandler);
     setupClose.addEventListener('keydown', setupCloseEnterPressHandler);
     document.addEventListener('keydown', setupEscPressDocHandler);
-    dragHandle.addEventListener('mousedown', dragHandleMouseDownHandler);
+    handle.addEventListener('mousedown', handleMouseDownHandler);
 
     setupOpen.removeEventListener('click', openSetup);
     setupOpen.removeEventListener('keydown', setupOpenEnterPressHandler);
@@ -24,7 +25,7 @@
     setupClose.removeEventListener('click', closeSetup);
     setupClose.removeEventListener('keydown', setupCloseEnterPressHandler);
     document.removeEventListener('keydown', setupEscPressDocHandler);
-    dragHandle.removeEventListener('mousedown', dragHandleMouseDownHandler);
+    handle.removeEventListener('mousedown', handleMouseDownHandler);
 
     setupOpen.addEventListener('click', openSetup);
     setupOpen.addEventListener('keydown', setupOpenEnterPressHandler);
@@ -32,51 +33,8 @@
 
   // Drag'n'drop
   var dragSetup = function (evt) {
-    // Функции
-    var moveSetup = function (moveEvt) {
-      dragged = true;
-
-      var shift = {
-        x: moveEvt.clientX - startCoords.x,
-        y: moveEvt.clientY - startCoords.y
-      };
-
-      startCoords = {
-        x: moveEvt.clientX,
-        y: moveEvt.clientY
-      };
-
-      setup.style.top = (setup.offsetTop + shift.y) + 'px';
-      setup.style.left = (setup.offsetLeft + shift.x) + 'px';
-    };
-
-    var dropSetup = function () {
-      var dragHandleClickHandler = function (clickEvt) {
-        if (dragged) {
-          clickEvt.preventDefault();
-          dragHandle.removeEventListener('click', dragHandleClickHandler);
-        }
-      };
-
-      dragHandle.addEventListener('click', dragHandleClickHandler);
-      document.removeEventListener('mousemove', mouseMoveHandler);
-      document.removeEventListener('mouseup', mouseUpHandler);
-    };
-
-    // Обработчики
-    var mouseMoveHandler = function (moveEvt) {
-      moveEvt.preventDefault();
-      moveSetup(moveEvt);
-    };
-
-    var mouseUpHandler = function (upEvt) {
-      upEvt.preventDefault();
-      dropSetup();
-    };
-
-    // Старт
-    var dragged = false;
-    var startCoords = {
+    dragged = false;
+    startCoords = {
       x: evt.clientX,
       y: evt.clientY
     };
@@ -85,9 +43,38 @@
     document.addEventListener('mouseup', mouseUpHandler);
   };
 
+  var moveSetup = function (evt) {
+    dragged = true;
+
+    var shift = {
+      x: evt.clientX - startCoords.x,
+      y: evt.clientY - startCoords.y
+    };
+
+    startCoords = {
+      x: evt.clientX,
+      y: evt.clientY
+    };
+
+    setup.style.top = (setup.offsetTop + shift.y) + 'px';
+    setup.style.left = (setup.offsetLeft + shift.x) + 'px';
+  };
+
+  var dropSetup = function () {
+    var handleClickHandler = function (clickEvt) {
+      if (dragged) {
+        clickEvt.preventDefault();
+        handle.removeEventListener('click', handleClickHandler);
+      }
+    };
+
+    handle.addEventListener('click', handleClickHandler);
+    document.removeEventListener('mousemove', mouseMoveHandler);
+    document.removeEventListener('mouseup', mouseUpHandler);
+  };
+
   // Обрабочики
   // ---------------
-
   // Открытие/закрытие
   var setupOpenClickHandler = function (evt) {
     evt.preventDefault();
@@ -118,9 +105,19 @@
   };
 
   // Drag'n'drop
-  var dragHandleMouseDownHandler = function (evt) {
+  var handleMouseDownHandler = function (evt) {
     evt.preventDefault();
     dragSetup(evt);
+  };
+
+  var mouseMoveHandler = function (evt) {
+    evt.preventDefault();
+    moveSetup(evt);
+  };
+
+  var mouseUpHandler = function (evt) {
+    evt.preventDefault();
+    dropSetup();
   };
 
   // Элементы
@@ -129,15 +126,13 @@
   var setupOpen = document.querySelector('.setup-open');
   var setupClose = setup.querySelector('.setup-close');
   var userName = setup.querySelector('.setup-user-name');
-  var dragHandle = setup.querySelector('.upload');
+  var handle = setup.querySelector('.upload');
 
   // Старт
   // ---------------
+  var dragged = false;
+  var startCoords = {};
   setupOpen.addEventListener('click', setupOpenClickHandler);
   setupOpen.addEventListener('keydown', setupOpenEnterPressHandler);
 
-  // TEMP:
-  openSetup();
-  // Скрытый инпут-файл avatar
-  // moveEvt
 })();
