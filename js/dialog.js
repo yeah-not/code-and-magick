@@ -64,6 +64,8 @@
     var mouseMoveHandler = function (moveEvt) {
       moveEvt.preventDefault();
 
+      dragged= true;
+
       var shift = {
         x: moveEvt.clientX - startCoords.x,
         y: moveEvt.clientY - startCoords.y
@@ -82,12 +84,21 @@
     var mouseUpHandler = function (upEvt) {
       upEvt.preventDefault();
 
+      var dragHandleClickHandler = function (clickEvt) {
+        if (dragged) {
+          clickEvt.preventDefault();
+          dragHandle.removeEventListener('click', dragHandleClickHandler);
+        }
+      }
+
+      dragHandle.addEventListener('click', dragHandleClickHandler);
       document.removeEventListener('mousemove', mouseMoveHandler);
       document.removeEventListener('mouseup', mouseUpHandler);
     };
 
     // Старт
     // ---------------
+    var dragged = false;
     var startCoords = {
       x: evt.clientX,
       y: evt.clientY
@@ -102,8 +113,8 @@
   var setup = document.querySelector('.setup');
   var setupOpen = document.querySelector('.setup-open');
   var setupClose = setup.querySelector('.setup-close');
-  var dragHandle = setup.querySelector('.setup-user-pic');
   var userName = setup.querySelector('.setup-user-name');
+  var dragHandle = setup.querySelector('.upload');
 
   // Старт
   // ---------------
