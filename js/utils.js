@@ -27,6 +27,20 @@ var isEmpty = function (obj) {
   return true;
 };
 
+var getElementCoords = function (el) {
+  var elCoords = {
+    x: el.offsetLeft,
+    y: el.offsetTop
+  };
+
+  return elCoords;
+};
+
+var setElementCoords = function (el, coords) {
+  el.style.left = coords.x + 'px';
+  el.style.top = coords.y + 'px';
+};
+
 var randomizeFillColor = function (element, colors) {
   var color = colors[getRandomInt(0, colors.length - 1)];
   element.style.fill = color;

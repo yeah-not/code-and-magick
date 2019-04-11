@@ -20,13 +20,9 @@
     setup.classList.remove('hidden');
 
     if (isEmpty(startCoords)) {
-      startCoords = {
-        x: setup.offsetLeft,
-        y: setup.offsetTop
-      };
+      startCoords = getElementCoords(setup);
     } else {
-      setup.style.left = startCoords.x + 'px';
-      setup.style.top = startCoords.y + 'px';
+      setElementCoords(setup, startCoords);
     }
   };
 
