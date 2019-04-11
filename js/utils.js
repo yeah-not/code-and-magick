@@ -18,6 +18,15 @@ var getRandomInt = function (min, max) {
   return Math.floor(Math.random() * (max + 1 - min)) + min;
 };
 
+var isEmpty = function (obj) {
+  for (var key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      return false;
+    }
+  }
+  return true;
+};
+
 var randomizeFillColor = function (element, colors) {
   var color = colors[getRandomInt(0, colors.length - 1)];
   element.style.fill = color;

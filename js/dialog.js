@@ -8,6 +8,7 @@
   // ---------------
   // Открытие/закрытие
   var openSetup = function () {
+
     setupClose.addEventListener('click', setupCloseClickHandler);
     setupClose.addEventListener('keydown', setupCloseEnterPressHandler);
     document.addEventListener('keydown', setupEscPressDocHandler);
@@ -17,6 +18,16 @@
     setupOpen.removeEventListener('keydown', setupOpenEnterPressHandler);
 
     setup.classList.remove('hidden');
+
+    if (isEmpty(startCoords)) {
+      startCoords = {
+        x: setup.offsetLeft,
+        y: setup.offsetTop
+      };
+    } else {
+      setup.style.left = startCoords.x + 'px';
+      setup.style.top = startCoords.y + 'px';
+    }
   };
 
   var closeSetup = function () {
@@ -34,7 +45,7 @@
   // Drag'n'drop
   var dragSetup = function (evt) {
     dragged = false;
-    startCoords = {
+    mouseCoords = {
       x: evt.clientX,
       y: evt.clientY
     };
@@ -47,17 +58,17 @@
     dragged = true;
 
     var shift = {
-      x: evt.clientX - startCoords.x,
-      y: evt.clientY - startCoords.y
+      x: evt.clientX - mouseCoords.x,
+      y: evt.clientY - mouseCoords.y
     };
 
-    startCoords = {
+    mouseCoords = {
       x: evt.clientX,
       y: evt.clientY
     };
 
-    setup.style.top = (setup.offsetTop + shift.y) + 'px';
     setup.style.left = (setup.offsetLeft + shift.x) + 'px';
+    setup.style.top = (setup.offsetTop + shift.y) + 'px';
   };
 
   var dropSetup = function () {
@@ -131,7 +142,9 @@
   // Старт
   // ---------------
   var dragged = false;
+  var mouseCoords = {};
   var startCoords = {};
+
   setupOpen.addEventListener('click', setupOpenClickHandler);
   setupOpen.addEventListener('keydown', setupOpenEnterPressHandler);
 
