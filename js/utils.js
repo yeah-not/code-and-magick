@@ -17,6 +17,9 @@
         action();
       }
     },
+    getRandomInt: function (min, max) {
+      return Math.floor(Math.random() * (max + 1 - min)) + min;
+    },
   };
 })();
 
@@ -31,9 +34,7 @@ var WIZARDS_NUM = 4;
 
 // Утилиты
 // ---------------
-var getRandomInt = function (min, max) {
-  return Math.floor(Math.random() * (max + 1 - min)) + min;
-};
+
 
 var isEmpty = function (obj) {
   for (var key in obj) {
