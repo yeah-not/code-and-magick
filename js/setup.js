@@ -1,39 +1,11 @@
 'use strict';
 
+// Константы
+// ---------------
+var WIZARDS_NUM = 4;
+
 // Функции
 // ---------------
-var getWizard = function (data) {
-  var wizard = {
-    name: data.firstName + ' ' + data.secondName,
-    coatColor: data.coatColor,
-    eyesColor: data.eyesColor
-  };
-
-  return wizard;
-};
-
-var getWizards = function (num, data) {
-  var wizards = [];
-
-  for (var i = 0; i < num; i++) {
-    var firstNameIndex = window.util.getRandomInt(0, FIRST_NAMES.length - 1);
-    var secondNameIndex = window.util.getRandomInt(0, SECOND_NAMES.length - 1);
-    var coatColorIndex = window.util.getRandomInt(0, COAT_COLORS.length - 1);
-    var eyesColorIndex = window.util.getRandomInt(0, EYES_COLORS.length - 1);
-
-    var wizardData = {
-      firstName: data.firstNames[firstNameIndex],
-      secondName: data.secondNames[secondNameIndex],
-      coatColor: data.coatColors[coatColorIndex],
-      eyesColor: data.eyesColors[eyesColorIndex]
-    };
-
-    wizards[i] = getWizard(wizardData);
-  }
-
-  return wizards;
-};
-
 var renderWizard = function (wizard, template) {
   var wizardElement = template.cloneNode(true);
 
@@ -56,7 +28,6 @@ var renderWizards = function (wizards, template) {
 
 // Обрабочики
 // ---------------
-
 
 // Вылидация настроек персонажа на ввод
 var userNameInputHandler = function (evt) {
@@ -90,24 +61,14 @@ var similarWizardTemplate = document.querySelector('#similar-wizard-template').c
 
 // Старт
 // ---------------
-var wizardsData = {
-  firstNames: FIRST_NAMES,
-  secondNames: SECOND_NAMES,
-  coatColors: COAT_COLORS,
-  eyesColors: EYES_COLORS
-};
 
-var wizards = getWizards(WIZARDS_NUM, wizardsData);
+var wizards = window.data.generateWizards(WIZARDS_NUM);
 similarListElement.appendChild(renderWizards(wizards, similarWizardTemplate));
 similarContainer.classList.remove('hidden');
 
 // TEMP:
 // Обрабочики валидации
 userName.addEventListener('input', userNameInputHandler);
-// Обработчики цвета персонажа
-// wizardCoat.addEventListener('click', wizardCoatClickHandler);
-// wizardEyes.addEventListener('click', wizardEyesClickHandler);
-// wizardFireball.addEventListener('click', wizardFireballClickHandler);
 
 // Изменение цвета элементов персонажа по нажатию
 window.colorization.add(wizardCoat);
