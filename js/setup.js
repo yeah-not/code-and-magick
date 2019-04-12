@@ -25,7 +25,7 @@ var getWizards = function (num, data) {
       firstName: data.firstNames[firstNameIndex],
       secondName: data.secondNames[secondNameIndex],
       coatColor: data.coatColors[coatColorIndex],
-      eyesColor: data.eyesColors[wizardData]
+      eyesColor: data.eyesColors[eyesColorIndex]
     };
 
     wizards[i] = getWizard(wizardData);
@@ -71,19 +71,6 @@ var userNameInputHandler = function (evt) {
   target.reportValidity();
 };
 
-// Изменение цвета элементов персонажа по нажатию
-var wizardCoatClickHandler = function (evt) {
-  coatColorInput.value = randomizeFillColor(evt.target, COAT_COLORS);
-};
-
-var wizardEyesClickHandler = function (evt) {
-  eyesColorInput.value = randomizeFillColor(evt.target, EYES_COLORS);
-};
-
-var wizardFireballClickHandler = function (evt) {
-  fireballColorInput.value = randomizeBgColor(evt.target, FIREBALL_COLORS);
-};
-
 // Элементы
 // ---------------
 var setup = document.querySelector('.setup');
@@ -92,7 +79,7 @@ var userName = setup.querySelector('.setup-user-name');
 var wizardSetup = document.querySelector('.setup-wizard');
 var wizardCoat = wizardSetup.querySelector('.wizard-coat');
 var wizardEyes = wizardSetup.querySelector('.wizard-eyes');
-var wizardFireball = setup.querySelector('.setup-fireball-wrap');
+var wizardFireball = setup.querySelector('.setup-fireball');
 var coatColorInput = setup.querySelector('input[name=coat-color]');
 var eyesColorInput = setup.querySelector('input[name=eyes-color]');
 var fireballColorInput = setup.querySelector('input[name=fireball-color]');
@@ -118,14 +105,20 @@ similarContainer.classList.remove('hidden');
 // Обрабочики валидации
 userName.addEventListener('input', userNameInputHandler);
 // Обработчики цвета персонажа
-wizardCoat.addEventListener('click', wizardCoatClickHandler);
-wizardEyes.addEventListener('click', wizardEyesClickHandler);
-wizardFireball.addEventListener('click', wizardFireballClickHandler);
+// wizardCoat.addEventListener('click', wizardCoatClickHandler);
+// wizardEyes.addEventListener('click', wizardEyesClickHandler);
+// wizardFireball.addEventListener('click', wizardFireballClickHandler);
+
+// Изменение цвета элементов персонажа по нажатию
+window.colorization.add(wizardCoat);
+window.colorization.add(wizardEyes);
+window.colorization.add(wizardFireball);
 
 // TEMP:
 // // Обрабочики валидации
 // userName.removeEventListener('input', userNameInputHandler);
 // // Обработчики цвета персонажа
-// wizardCoat.removeEventListener('click', wizardCoatClickHandler);
-// wizardEyes.removeEventListener('click', wizardEyesClickHandler);
-// wizardFireball.removeEventListener('click', wizardFireballClickHandler);
+
+// window.colorization.remove(wizardCoat);
+// window.colorization.remove(wizardEyes);
+// window.colorization.remove(wizardFireball);

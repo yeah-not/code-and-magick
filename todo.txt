@@ -1,0 +1,2 @@
+getRandom - работа с объектами
+input[name=coat-color] и т.п.
