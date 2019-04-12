@@ -11,7 +11,7 @@
 
     setupClose.addEventListener('click', setupCloseClickHandler);
     setupClose.addEventListener('keydown', setupCloseEnterPressHandler);
-    document.addEventListener('keydown', setupEscPressDocHandler);
+    document.addEventListener('keydown', docEscPressHandler);
     handle.addEventListener('mousedown', handleMouseDownHandler);
 
     setupOpen.removeEventListener('click', openSetup);
@@ -31,7 +31,7 @@
 
     setupClose.removeEventListener('click', closeSetup);
     setupClose.removeEventListener('keydown', setupCloseEnterPressHandler);
-    document.removeEventListener('keydown', setupEscPressDocHandler);
+    document.removeEventListener('keydown', docEscPressHandler);
     handle.removeEventListener('mousedown', handleMouseDownHandler);
 
     setupOpen.addEventListener('click', openSetup);
@@ -93,22 +93,18 @@
     closeSetup();
   };
 
-  var setupEscPressDocHandler = function (evt) {
-    if (evt.keyCode === ESC_KEYCODE && evt.target !== userName) {
-      closeSetup(evt);
+  var docEscPressHandler = function (evt) {
+    if (evt.target !== userName) {
+      window.utils.isEscEvent(evt, closeSetup);
     }
   };
 
   var setupOpenEnterPressHandler = function (evt) {
-    if (evt.keyCode === ENTER_KEYCODE) {
-      openSetup(evt);
-    }
+    window.utils.isEnterEvent(etv, openSetup);
   };
 
   var setupCloseEnterPressHandler = function (evt) {
-    if (evt.keyCode === ENTER_KEYCODE) {
-      closeSetup(evt);
-    }
+    window.utils.isEnterEvent(etv, closeSetup);
   };
 
   // Drag'n'drop
