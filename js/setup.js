@@ -29,19 +29,6 @@ var renderWizards = function (wizards, template) {
 // Обрабочики
 // ---------------
 
-// Вылидация настроек персонажа на ввод
-var userNameInputHandler = function (evt) {
-  var target = evt.target;
-  if (target.validity.tooShort || target.validity.tooLong) {
-    target.setCustomValidity('Поле должно содержать от 2 до 25 символов');
-  } else if (target.validity.valueMissing) {
-    target.setCustomValidity('Обязательное поле');
-  } else {
-    target.setCustomValidity('');
-  }
-  target.reportValidity();
-};
-
 // Элементы
 // ---------------
 var setup = document.querySelector('.setup');
@@ -67,8 +54,8 @@ similarListElement.appendChild(renderWizards(wizards, similarWizardTemplate));
 similarContainer.classList.remove('hidden');
 
 // TEMP:
-// Обрабочики валидации
-userName.addEventListener('input', userNameInputHandler);
+// Валидация
+window.validation.add(userName);
 
 // Изменение цвета элементов персонажа по нажатию
 window.colorization.add(wizardCoat);
@@ -83,3 +70,4 @@ window.colorization.add(wizardFireball);
 // window.colorization.remove(wizardCoat);
 // window.colorization.remove(wizardEyes);
 // window.colorization.remove(wizardFireball);
+// window.validation.remove(userName);
