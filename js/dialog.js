@@ -19,10 +19,10 @@
 
     setup.classList.remove('hidden');
 
-    if (isEmpty(startCoords)) {
-      startCoords = getElementCoords(setup);
+    if (window.utils.isEmpty(startCoords)) {
+      startCoords = window.utils.getElementCoords(setup);
     } else {
-      setElementCoords(setup, startCoords);
+      window.utils.setElementCoords(setup, startCoords);
     }
   };
 

@@ -20,6 +20,26 @@
     getRandomInt: function (min, max) {
       return Math.floor(Math.random() * (max + 1 - min)) + min;
     },
+    isEmpty: function (obj) {
+      for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          return false;
+        }
+      }
+      return true;
+    },
+    getElementCoords: function (el) {
+      var elCoords = {
+        x: el.offsetLeft,
+        y: el.offsetTop
+      };
+
+      return elCoords;
+    },
+    setElementCoords: function (el, coords) {
+      el.style.left = coords.x + 'px';
+      el.style.top = coords.y + 'px';
+    },
   };
 })();
 
@@ -34,30 +54,6 @@ var WIZARDS_NUM = 4;
 
 // Утилиты
 // ---------------
-
-
-var isEmpty = function (obj) {
-  for (var key in obj) {
-    if (obj.hasOwnProperty(key)) {
-      return false;
-    }
-  }
-  return true;
-};
-
-var getElementCoords = function (el) {
-  var elCoords = {
-    x: el.offsetLeft,
-    y: el.offsetTop
-  };
-
-  return elCoords;
-};
-
-var setElementCoords = function (el, coords) {
-  el.style.left = coords.x + 'px';
-  el.style.top = coords.y + 'px';
-};
 
 var randomizeFillColor = function (element, colors) {
   var color = colors[getRandomInt(0, colors.length - 1)];
