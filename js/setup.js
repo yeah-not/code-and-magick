@@ -16,10 +16,10 @@ var getWizards = function (num, data) {
   var wizards = [];
 
   for (var i = 0; i < num; i++) {
-    var firstNameIndex = window.utils.getRandomInt(0, FIRST_NAMES.length - 1);
-    var secondNameIndex = window.utils.getRandomInt(0, SECOND_NAMES.length - 1);
-    var coatColorIndex = window.utils.getRandomInt(0, COAT_COLORS.length - 1);
-    var eyesColorIndex = window.utils.getRandomInt(0, EYES_COLORS.length - 1);
+    var firstNameIndex = window.util.getRandomInt(0, FIRST_NAMES.length - 1);
+    var secondNameIndex = window.util.getRandomInt(0, SECOND_NAMES.length - 1);
+    var coatColorIndex = window.util.getRandomInt(0, COAT_COLORS.length - 1);
+    var eyesColorIndex = window.util.getRandomInt(0, EYES_COLORS.length - 1);
 
     var wizardData = {
       firstName: data.firstNames[firstNameIndex],

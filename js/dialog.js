@@ -19,10 +19,10 @@
 
     setup.classList.remove('hidden');
 
-    if (window.utils.isEmpty(startCoords)) {
-      startCoords = window.utils.getElementCoords(setup);
+    if (window.util.isEmpty(startCoords)) {
+      startCoords = window.util.getElementCoords(setup);
     } else {
-      window.utils.setElementCoords(setup, startCoords);
+      window.util.setElementCoords(setup, startCoords);
     }
   };
 
@@ -95,16 +95,16 @@
 
   var docEscPressHandler = function (evt) {
     if (evt.target !== userName) {
-      window.utils.isEscEvent(evt, closeSetup);
+      window.util.isEscEvent(evt, closeSetup);
     }
   };
 
   var setupOpenEnterPressHandler = function (evt) {
-    window.utils.isEnterEvent(etv, openSetup);
+    window.util.isEnterEvent(etv, openSetup);
   };
 
   var setupCloseEnterPressHandler = function (evt) {
-    window.utils.isEnterEvent(etv, closeSetup);
+    window.util.isEnterEvent(etv, closeSetup);
   };
 
   // Drag'n'drop
