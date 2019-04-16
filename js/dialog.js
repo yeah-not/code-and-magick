@@ -17,17 +17,17 @@
     setupOpen.removeEventListener('click', openSetup);
     setupOpen.removeEventListener('keydown', setupOpenEnterPressHandler);
 
-    setup.classList.remove('hidden');
+    setupDialog.classList.remove('hidden');
 
     if (window.util.isEmpty(startCoords)) {
-      startCoords = window.util.getElementCoords(setup);
+      startCoords = window.util.getElementCoords(setupDialog);
     } else {
-      window.util.setElementCoords(setup, startCoords);
+      window.util.setElementCoords(setupDialog, startCoords);
     }
   };
 
   var closeSetup = function () {
-    setup.classList.add('hidden');
+    setupDialog.classList.add('hidden');
 
     setupClose.removeEventListener('click', closeSetup);
     setupClose.removeEventListener('keydown', setupCloseEnterPressHandler);
@@ -63,8 +63,8 @@
       y: evt.clientY
     };
 
-    setup.style.left = (setup.offsetLeft + shift.x) + 'px';
-    setup.style.top = (setup.offsetTop + shift.y) + 'px';
+    setupDialog.style.left = (setupDialog.offsetLeft + shift.x) + 'px';
+    setupDialog.style.top = (setupDialog.offsetTop + shift.y) + 'px';
   };
 
   var dropSetup = function () {
@@ -100,11 +100,11 @@
   };
 
   var setupOpenEnterPressHandler = function (evt) {
-    window.util.isEnterEvent(etv, openSetup);
+    window.util.isEnterEvent(evt, openSetup);
   };
 
   var setupCloseEnterPressHandler = function (evt) {
-    window.util.isEnterEvent(etv, closeSetup);
+    window.util.isEnterEvent(evt, closeSetup);
   };
 
   // Drag'n'drop
@@ -125,11 +125,11 @@
 
   // Элементы
   // ---------------
-  var setup = document.querySelector('.setup');
+  var setupDialog = document.querySelector('.setup');
   var setupOpen = document.querySelector('.setup-open');
-  var setupClose = setup.querySelector('.setup-close');
-  var userName = setup.querySelector('.setup-user-name');
-  var handle = setup.querySelector('.upload');
+  var setupClose = setupDialog.querySelector('.setup-close');
+  var userName = setupDialog.querySelector('.setup-user-name');
+  var handle = setupDialog.querySelector('.upload');
 
   // Старт
   // ---------------
