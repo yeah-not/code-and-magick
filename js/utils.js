@@ -54,5 +54,11 @@
       el.style.left = coords.x + 'px';
       el.style.top = coords.y + 'px';
     },
+    hide: function (el) {
+      el.classList.add('hidden');
+    },
+    show: function (el) {
+      el.classList.remove('hidden');
+    }
   };
 })();

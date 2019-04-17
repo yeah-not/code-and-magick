@@ -11,7 +11,7 @@
     var colorSet = window.data.colors[colorSetName];
 
     if (!colorSet) {
-      colorSet = colorsData.default;
+      colorSet = window.data.colors.default;
     }
 
     var color = window.util.getRandomElement(colorSet);
@@ -21,6 +21,13 @@
       element.style.backgroundColor = color;
     } else {
       element.style.fill = color;
+    }
+
+    // Подстановка цвета в hidden input
+    var colorInputName = element.dataset.input;
+    var colorInput = document.querySelector('input[name=' + colorInputName + ']');
+    if (colorInput) {
+      colorInput.value = color;
     }
   };
 
