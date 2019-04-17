@@ -29,6 +29,17 @@
       var index = this.getRandomInt(0, array.length - 1);
       return array[index];
     },
+    getMaxElement: function (array) {
+      var max = array[0];
+
+      for (var i = 0; i < array.length; i++) {
+        if (array[i] > max) {
+          max = array[i];
+        }
+      }
+
+      return max;
+    },
     isEmpty: function (obj) {
       for (var key in obj) {
         if (obj.hasOwnProperty(key)) {
