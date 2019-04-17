@@ -1,54 +1,64 @@
 'use strict';
 
-// Константы
-// ---------------
-var ENTER_KEYCODE = 13;
-var ESC_KEYCODE = 27;
-
-var FIRST_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-var SECOND_NAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
-var COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
-var FIREBALL_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
-var WIZARDS_NUM = 4;
-
 // Утилиты
 // ---------------
-var getRandomInt = function (min, max) {
-  return Math.floor(Math.random() * (max + 1 - min)) + min;
-};
 
-var isEmpty = function (obj) {
-  for (var key in obj) {
-    if (obj.hasOwnProperty(key)) {
-      return false;
+(function () {
+  // Константы
+  // ---------------
+  var ENTER_KEYCODE = 13;
+  var ESC_KEYCODE = 27;
+
+  // Экспорт
+  // ---------------
+  window.util = {
+    isEscEvent: function (evt, action) {
+      if (evt.keyCode === ESC_KEYCODE) {
+        action();
+      }
+    },
+    isEnterEvent: function (evt, action) {
+      if (evt.keyCode === ENTER_KEYCODE) {
+        action();
+      }
+    },
+    getRandomInt: function (min, max) {
+      return Math.floor(Math.random() * (max + 1 - min)) + min;
+    },
+    getRandomElement: function (array) {
+      var index = this.getRandomInt(0, array.length - 1);
+      return array[index];
+    },
+    isEmpty: function (obj) {
+      for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          return false;
+        }
+      }
+      return true;
+    },
+    dashedToCamel: function (str) {
+      return str.replace(/(\-\w)/g, function (m) {
+        return m[1].toUpperCase();
+      });
+    },
+    getElementCoords: function (el) {
+      var elCoords = {
+        x: el.offsetLeft,
+        y: el.offsetTop
+      };
+
+      return elCoords;
+    },
+    setElementCoords: function (el, coords) {
+      el.style.left = coords.x + 'px';
+      el.style.top = coords.y + 'px';
+    },
+    hide: function (el) {
+      el.classList.add('hidden');
+    },
+    show: function (el) {
+      el.classList.remove('hidden');
     }
-  }
-  return true;
-};
-
-var getElementCoords = function (el) {
-  var elCoords = {
-    x: el.offsetLeft,
-    y: el.offsetTop
   };
-
-  return elCoords;
-};
-
-var setElementCoords = function (el, coords) {
-  el.style.left = coords.x + 'px';
-  el.style.top = coords.y + 'px';
-};
-
-var randomizeFillColor = function (element, colors) {
-  var color = colors[getRandomInt(0, colors.length - 1)];
-  element.style.fill = color;
-  return color;
-};
-
-var randomizeBgColor = function (element, colors) {
-  var color = colors[getRandomInt(0, colors.length - 1)];
-  element.style.backgroundColor = color;
-  return color;
-};
+})();

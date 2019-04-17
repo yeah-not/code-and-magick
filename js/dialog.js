@@ -11,31 +11,35 @@
 
     setupClose.addEventListener('click', setupCloseClickHandler);
     setupClose.addEventListener('keydown', setupCloseEnterPressHandler);
-    document.addEventListener('keydown', setupEscPressDocHandler);
+    document.addEventListener('keydown', docEscPressHandler);
     handle.addEventListener('mousedown', handleMouseDownHandler);
 
     setupOpen.removeEventListener('click', openSetup);
     setupOpen.removeEventListener('keydown', setupOpenEnterPressHandler);
 
-    setup.classList.remove('hidden');
+    window.util.show(setupDialog);
 
-    if (isEmpty(startCoords)) {
-      startCoords = getElementCoords(setup);
+    if (window.util.isEmpty(startCoords)) {
+      startCoords = window.util.getElementCoords(setupDialog);
     } else {
-      setElementCoords(setup, startCoords);
+      window.util.setElementCoords(setupDialog, startCoords);
     }
+
+    dialog.onOpened();
   };
 
   var closeSetup = function () {
-    setup.classList.add('hidden');
+    window.util.hide(setupDialog);
 
     setupClose.removeEventListener('click', closeSetup);
     setupClose.removeEventListener('keydown', setupCloseEnterPressHandler);
-    document.removeEventListener('keydown', setupEscPressDocHandler);
+    document.removeEventListener('keydown', docEscPressHandler);
     handle.removeEventListener('mousedown', handleMouseDownHandler);
 
     setupOpen.addEventListener('click', openSetup);
     setupOpen.addEventListener('keydown', setupOpenEnterPressHandler);
+
+    dialog.onClosed();
   };
 
   // Drag'n'drop
@@ -63,8 +67,8 @@
       y: evt.clientY
     };
 
-    setup.style.left = (setup.offsetLeft + shift.x) + 'px';
-    setup.style.top = (setup.offsetTop + shift.y) + 'px';
+    setupDialog.style.left = (setupDialog.offsetLeft + shift.x) + 'px';
+    setupDialog.style.top = (setupDialog.offsetTop + shift.y) + 'px';
   };
 
   var dropSetup = function () {
@@ -93,22 +97,18 @@
     closeSetup();
   };
 
-  var setupEscPressDocHandler = function (evt) {
-    if (evt.keyCode === ESC_KEYCODE && evt.target !== userName) {
-      closeSetup(evt);
+  var docEscPressHandler = function (evt) {
+    if (evt.target !== userName) {
+      window.util.isEscEvent(evt, closeSetup);
     }
   };
 
   var setupOpenEnterPressHandler = function (evt) {
-    if (evt.keyCode === ENTER_KEYCODE) {
-      openSetup(evt);
-    }
+    window.util.isEnterEvent(evt, openSetup);
   };
 
   var setupCloseEnterPressHandler = function (evt) {
-    if (evt.keyCode === ENTER_KEYCODE) {
-      closeSetup(evt);
-    }
+    window.util.isEnterEvent(evt, closeSetup);
   };
 
   // Drag'n'drop
@@ -129,11 +129,11 @@
 
   // Элементы
   // ---------------
-  var setup = document.querySelector('.setup');
+  var setupDialog = document.querySelector('.setup');
   var setupOpen = document.querySelector('.setup-open');
-  var setupClose = setup.querySelector('.setup-close');
-  var userName = setup.querySelector('.setup-user-name');
-  var handle = setup.querySelector('.upload');
+  var setupClose = setupDialog.querySelector('.setup-close');
+  var userName = setupDialog.querySelector('.setup-user-name');
+  var handle = setupDialog.querySelector('.upload');
 
   // Старт
   // ---------------
@@ -143,5 +143,15 @@
 
   setupOpen.addEventListener('click', setupOpenClickHandler);
   setupOpen.addEventListener('keydown', setupOpenEnterPressHandler);
+
+  // События открытия/закрытия
+  var dialog = {
+    onOpened: function () {},
+    onClosed: function () {}
+  };
+
+  // Экспорт
+  // ---------------
+  window.dialog = dialog;
 
 })();
