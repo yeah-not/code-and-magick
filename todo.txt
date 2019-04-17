@@ -1,4 +1,0 @@
-showElement/hideElement
-getMaxElement?
-input[name=coat-color] и т.п.
-Экспорт > Интерфейс

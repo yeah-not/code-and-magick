@@ -65,7 +65,7 @@
       var wizards = generateWizards(window.data.wizardsNum, window.data.wizards);
       var wizardsList = renderWizards(wizards, similarWizardTemplate);
       similarListElement.appendChild(wizardsList);
-      similarContainer.classList.remove('hidden');
+      window.util.show(similarContainer);
     }
   };
 })();

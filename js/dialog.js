@@ -17,7 +17,7 @@
     setupOpen.removeEventListener('click', openSetup);
     setupOpen.removeEventListener('keydown', setupOpenEnterPressHandler);
 
-    setupDialog.classList.remove('hidden');
+    window.util.show(setupDialog);
 
     if (window.util.isEmpty(startCoords)) {
       startCoords = window.util.getElementCoords(setupDialog);
@@ -29,7 +29,7 @@
   };
 
   var closeSetup = function () {
-    setupDialog.classList.add('hidden');
+    window.util.hide(setupDialog);
 
     setupClose.removeEventListener('click', closeSetup);
     setupClose.removeEventListener('keydown', setupCloseEnterPressHandler);
