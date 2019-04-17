@@ -24,6 +24,8 @@
     } else {
       window.util.setElementCoords(setupDialog, startCoords);
     }
+
+    dialog.onOpened();
   };
 
   var closeSetup = function () {
@@ -36,6 +38,8 @@
 
     setupOpen.addEventListener('click', openSetup);
     setupOpen.addEventListener('keydown', setupOpenEnterPressHandler);
+
+    dialog.onClosed();
   };
 
   // Drag'n'drop
@@ -139,5 +143,15 @@
 
   setupOpen.addEventListener('click', setupOpenClickHandler);
   setupOpen.addEventListener('keydown', setupOpenEnterPressHandler);
+
+  // События открытия/закрытия
+  var dialog = {
+    onOpened: function () {},
+    onClosed: function () {}
+  };
+
+  // Экспорт
+  // ---------------
+  window.dialog = dialog;
 
 })();

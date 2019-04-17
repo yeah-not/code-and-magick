@@ -1,5 +1,3 @@
-getRandom - работа с объектами
-getRandomElement > global to local в модуле
 showElement/hideElement
 getMaxElement?
 input[name=coat-color] и т.п.
