@@ -1,73 +1,41 @@
 'use strict';
 
-// Константы
-// ---------------
-var WIZARDS_NUM = 4;
+(function () {
+  // Константы
+  // ---------------
 
-// Функции
-// ---------------
-var renderWizard = function (wizard, template) {
-  var wizardElement = template.cloneNode(true);
+  // Функции
+  // ---------------
+  var initWizard = function () {
+    // Валидация
+    window.validation.add(userName);
+    // Изменение цвета элементов персонажа по нажатию
+    window.colorization.add(wizardCoat);
+    window.colorization.add(wizardEyes);
+    window.colorization.add(wizardFireball);
+  };
 
-  wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
-  wizardElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
-  wizardElement.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
+  // Элементы
+  // ---------------
+  var setup = document.querySelector('.setup');
+  var userName = setup.querySelector('.setup-user-name');
 
-  return wizardElement;
-};
+  var wizardSetup = document.querySelector('.setup-wizard');
+  var wizardCoat = wizardSetup.querySelector('.wizard-coat');
+  var wizardEyes = wizardSetup.querySelector('.wizard-eyes');
+  var wizardFireball = setup.querySelector('.setup-fireball');
+  var coatColorInput = setup.querySelector('input[name=coat-color]');
+  var eyesColorInput = setup.querySelector('input[name=eyes-color]');
+  var fireballColorInput = setup.querySelector('input[name=fireball-color]');
 
-var renderWizards = function (wizards, template) {
-  var fragment = document.createDocumentFragment();
+  // Старт
+  // ---------------
+  initWizard();
+  window.similar.init();
 
-  for (var i = 0; i < wizards.length; i++) {
-    fragment.appendChild(renderWizard(wizards[i], template));
-  }
-
-  return fragment;
-};
-
-// Обрабочики
-// ---------------
-
-// Элементы
-// ---------------
-var setup = document.querySelector('.setup');
-var userName = setup.querySelector('.setup-user-name');
-
-var wizardSetup = document.querySelector('.setup-wizard');
-var wizardCoat = wizardSetup.querySelector('.wizard-coat');
-var wizardEyes = wizardSetup.querySelector('.wizard-eyes');
-var wizardFireball = setup.querySelector('.setup-fireball');
-var coatColorInput = setup.querySelector('input[name=coat-color]');
-var eyesColorInput = setup.querySelector('input[name=eyes-color]');
-var fireballColorInput = setup.querySelector('input[name=fireball-color]');
-
-var similarContainer = document.querySelector('.setup-similar');
-var similarListElement = similarContainer.querySelector('.setup-similar-list');
-var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
-
-// Старт
-// ---------------
-
-var wizards = window.data.generateWizards(WIZARDS_NUM);
-similarListElement.appendChild(renderWizards(wizards, similarWizardTemplate));
-similarContainer.classList.remove('hidden');
-
-// TEMP:
-// Валидация
-window.validation.add(userName);
-
-// Изменение цвета элементов персонажа по нажатию
-window.colorization.add(wizardCoat);
-window.colorization.add(wizardEyes);
-window.colorization.add(wizardFireball);
-
-// TEMP:
-// // Обрабочики валидации
-// userName.removeEventListener('input', userNameInputHandler);
-// // Обработчики цвета персонажа
-
-// window.colorization.remove(wizardCoat);
-// window.colorization.remove(wizardEyes);
-// window.colorization.remove(wizardFireball);
-// window.validation.remove(userName);
+  // TEMP:
+  // window.colorization.remove(wizardCoat);
+  // window.colorization.remove(wizardEyes);
+  // window.colorization.remove(wizardFireball);
+  // window.validation.remove(userName);
+})();

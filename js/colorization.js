@@ -11,10 +11,10 @@
     var colorSet = window.data.colors[colorSetName];
 
     if (!colorSet) {
-      colorSet = window.data.colors.default;
+      colorSet = colorsData.default;
     }
 
-    var color = colorSet[window.util.getRandomInt(0, colorSet.length - 1)];
+    var color = window.util.getRandomElement(colorSet);
     var tag = element.tagName.toLowerCase();
 
     if (tag === 'div') {
@@ -23,6 +23,7 @@
       element.style.fill = color;
     }
   };
+
   // Обрабочики
   // ---------------
   var elementClickHandler = function (evt) {

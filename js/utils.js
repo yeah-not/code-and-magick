@@ -25,6 +25,10 @@
     getRandomInt: function (min, max) {
       return Math.floor(Math.random() * (max + 1 - min)) + min;
     },
+    getRandomElement: function (array) {
+      var index = this.getRandomInt(0, array.length - 1);
+      return array[index];
+    },
     isEmpty: function (obj) {
       for (var key in obj) {
         if (obj.hasOwnProperty(key)) {
