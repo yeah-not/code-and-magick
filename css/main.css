@@ -854,6 +854,12 @@ input[type=radio]:checked + .review-mark-label
     background-color: #da641a;
 }
 
+.setup-similar-error {
+  padding: 5px 20px;
+  color: #fff;
+  background: rgba(255, 0, 0, 0.5);
+}
+
 .setup-similar-title
 {
     margin-left: 20px;

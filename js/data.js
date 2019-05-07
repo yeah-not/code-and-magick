@@ -30,8 +30,8 @@
     wizards: {
       firstNames: FIRST_NAMES,
       secondNames: SECOND_NAMES,
-      coatColors: COAT_COLORS,
-      eyesColors: EYES_COLORS
+      colorsCoat: COAT_COLORS,
+      colorsEyes: EYES_COLORS
     },
 
   };

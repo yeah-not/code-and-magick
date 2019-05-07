@@ -68,15 +68,3 @@
     },
   };
 })();
-
-// TEMP:
-
-var onLoad = function (wizards) {
-  console.log(wizards);
-};
-
-var onError = function (message) {
-  console.log(message);
-};
-
-window.backend.load(onLoad, onError);

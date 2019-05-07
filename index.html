@@ -153,6 +153,9 @@
         <h4 class="setup-similar-title">Похожие персонажи</h4>
 
         <div class="setup-similar-list"><!--Список похожих персонажей--></div>
+        <div class="setup-similar-error error hidden">
+          <p class="error-message"><!-- Сообщение об Ошибке --></p>
+        </div>
       </div>
 
       <button class="button setup-submit">Сохранить</button>
@@ -178,6 +181,11 @@
       </svg>
     </div>
     <p class="setup-similar-label">Петр Петров</p>
+  </div>
+</template>
+<template id="error-template" style="display: none">
+  <div class="error">
+    <p class="error-message">Ошибка</p>
   </div>
 </template>
 <style>
