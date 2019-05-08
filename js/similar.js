@@ -52,20 +52,30 @@
     return fragment;
   };
 
-  // Обаботчики
-  // ---------------
-  var loadHandler = function (wizards) {
+  // Загрузка и Отображение
+  var loadSimilar = function (wizards) {
     // var wizards = generateWizards(window.data.wizardsNum, window.data.wizards);
     var wizardsList = renderWizards(wizards, window.data.wizardsNum, similarWizardTemplate);
     similarListElement.appendChild(wizardsList);
+
     window.util.hide(errorElement);
     window.util.show(similarContainer);
   };
 
-  var errorHandler = function (message) {
+  var showError = function (message) {
     errorElement.querySelector('.error-message').textContent = message;
     window.util.show(errorElement);
     window.util.show(similarContainer);
+  };
+
+  // Обаботчики
+  // ---------------
+  var loadHandler = function (data) {
+    loadSimilar(data);
+  };
+
+  var errorHandler = function (message) {
+    showError(message);
   };
 
   // Элементы
