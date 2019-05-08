@@ -153,11 +153,17 @@
         <h4 class="setup-similar-title">Похожие персонажи</h4>
 
         <div class="setup-similar-list"><!--Список похожих персонажей--></div>
+        <div class="setup-similar-error error hidden">
+          <p class="error-message"><!-- Сообщение об Ошибке --></p>
+        </div>
       </div>
 
       <button class="button setup-submit">Сохранить</button>
     </div>
   </form>
+  <div class="setup-error error hidden">
+    <p class="error-message"><!-- Сообщение об Ошибке --></p>
+  </div>
 </div>
 
 <footer>
@@ -178,6 +184,11 @@
       </svg>
     </div>
     <p class="setup-similar-label">Петр Петров</p>
+  </div>
+</template>
+<template id="error-template" style="display: none">
+  <div class="error">
+    <p class="error-message">Ошибка</p>
   </div>
 </template>
 <style>
@@ -209,6 +220,7 @@ var getWizardY = function(height) {
 
 <script src="js/utils.js"></script>
 <script src="js/data.js"></script>
+<script src="js/backend.js"></script>
 <script src="js/validation.js"></script>
 <script src="js/colorization.js"></script>
 
