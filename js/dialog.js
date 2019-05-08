@@ -98,7 +98,9 @@
   };
 
   var docEscPressHandler = function (evt) {
-    if (evt.target !== userName) {
+    var setupErrorShown = setupDialog.querySelector('.setup-error:not(.hidden)');
+
+    if (evt.target !== userName && !setupErrorShown) {
       window.util.isEscEvent(evt, closeSetup);
     }
   };

@@ -6,7 +6,7 @@
 (function () {
   // Константы
   // ---------------
-  var URL = 'https://js.dump.academy/code-and-magick/data/';
+  var URL = 'https://js.dump.academy/code-and-magick/';
 
   var xhrErrorHandler = function (onError) {
     if (typeof onError === 'function') {
@@ -59,16 +59,19 @@
       xhr.addEventListener('error', xhrErrorHandler.bind(this, onError));
       xhr.addEventListener('timeout', xhrTimeoutHandler.bind(this, xhr, onError));
 
-      xhr.open('GET', URL);
+      xhr.open('GET', URL + 'data/');
       xhr.send();
     },
     save: function (data, onLoad, onError) {
-      if (typeof onLoad === 'function') {
-        onLoad();
-      }
-      if (typeof onError === 'function') {
-        onError();
-      }
+      var xhr = new XMLHttpRequest();
+      xhr.timeout = 5000;
+
+      xhr.addEventListener('load', xhrLoadHandler.bind(this, xhr, onLoad, onError));
+      xhr.addEventListener('error', xhrErrorHandler.bind(this, onError));
+      xhr.addEventListener('timeout', xhrTimeoutHandler.bind(this, xhr, onError));
+
+      xhr.open('POST', URL);
+      xhr.send(data);
     },
   };
 })();
