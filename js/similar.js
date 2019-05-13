@@ -52,9 +52,41 @@
     return fragment;
   };
 
+  // Сортировка
+  var getRank = function (wizard) {
+    var rank = 0;
+
+    if (wizard.colorCoat === coatColor) {
+      rank += 2;
+    }
+
+    if (wizard.colorEyes === eyesColor) {
+      rank += 1;
+    }
+
+    return rank;
+  }
+
+  var compareWizards = function (left, right) {
+    var rankDiff = getRank(right) - getRank(left);
+    return rankDiff === 0 ? compareNames(left.name, right.name) : rankDiff;
+  };
+
+  var compareNames = function (leftName, rightName) {
+    if (leftName > rightName) {
+      return 1;
+    } else if (leftName < rightName) {
+      return -1;
+    } else {
+      return 0;
+    }
+  };
+
   // Загрузка и Отображение
-  var loadSimilar = function (wizards) {
+  var updateSimilar = function (wizards) {
     // var wizards = generateWizards(window.data.wizardsNum, window.data.wizards);
+    wizards.sort(compareWizards);
+
     var wizardsList = renderWizards(wizards, window.data.wizardsNum, similarWizardTemplate);
     similarListElement.appendChild(wizardsList);
 
@@ -71,12 +103,17 @@
   // Обаботчики
   // ---------------
   var loadHandler = function (data) {
-    loadSimilar(data);
+    updateSimilar(data);
   };
 
   var errorHandler = function (message) {
     showError(message);
   };
+
+  // Переменные
+  // ---------------
+  var coatColor = window.data.wizardDefault.colorCoat;
+  var eyesColor = window.data.wizardDefault.colorEyes;
 
   // Элементы
   // ---------------

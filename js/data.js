@@ -26,6 +26,11 @@
       wizardEyes: EYES_COLORS,
       setupFireball: FIREBALL_COLORS,
     },
+    wizardDefault: {
+      colorCoat: COAT_COLORS[0],
+      colorEyes: EYES_COLORS[0],
+      colorFireball: FIREBALL_COLORS[0],
+    },
     wizardsNum: WIZARDS_NUM,
     wizards: {
       firstNames: FIRST_NAMES,
