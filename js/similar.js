@@ -42,14 +42,11 @@
     return wizardElement;
   };
 
-  var renderWizards = function (wizards, amount, template) {
-    var fragment = document.createDocumentFragment();
+  var renderWizards = function (data, amount, template) {
+    var similarList = window.util.makeFragment(data.slice(0, amount), renderWizard, template);
 
-    for (var i = 0; i < amount; i++) {
-      fragment.appendChild(renderWizard(wizards[i], template));
-    }
-
-    return fragment;
+    window.util.removeChildren(similarListElement);
+    similarListElement.appendChild(similarList);
   };
 
   // Сортировка
@@ -65,7 +62,7 @@
     }
 
     return rank;
-  }
+  };
 
   var compareWizards = function (left, right) {
     var rankDiff = getRank(right) - getRank(left);
@@ -83,13 +80,8 @@
   };
 
   // Загрузка и Отображение
-  var updateSimilar = function (wizards) {
-    // var wizards = generateWizards(window.data.wizardsNum, window.data.wizards);
-    wizards.sort(compareWizards);
-
-    var wizardsList = renderWizards(wizards, window.data.wizardsNum, similarWizardTemplate);
-    similarListElement.appendChild(wizardsList);
-
+  var updateSimilar = function () {
+    renderWizards(wizards.sort(compareWizards), window.data.wizardsNum, similarWizardTemplate);
     window.util.hide(errorElement);
     window.util.show(similarContainer);
   };
@@ -103,15 +95,31 @@
   // Обаботчики
   // ---------------
   var loadHandler = function (data) {
-    updateSimilar(data);
+    wizards = data;
+    updateSimilar();
   };
 
   var errorHandler = function (message) {
     showError(message);
   };
 
+  window.colorization.onChange = function (element, color) {
+    switch (element.classList[0]) {
+      case 'wizard-coat':
+        coatColor = color;
+        updateSimilar();
+        break;
+      case 'wizard-eyes':
+        eyesColor = color;
+        updateSimilar();
+        break;
+      default:
+    }
+  };
+
   // Переменные
   // ---------------
+  var wizards = [];
   var coatColor = window.data.wizardDefault.colorCoat;
   var eyesColor = window.data.wizardDefault.colorEyes;
 
@@ -126,6 +134,7 @@
   // ---------------
   window.similar = {
     init: function () {
+      // wizards = generateWizards(window.data.wizardsNum, window.data.wizards);
       window.backend.load(loadHandler, errorHandler);
     }
   };

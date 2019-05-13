@@ -70,6 +70,20 @@
     },
     show: function (el) {
       el.classList.remove('hidden');
-    }
+    },
+    removeChildren: function (el) {
+      while (el.firstChild) {
+        el.removeChild(el.firstChild);
+      }
+    },
+    makeFragment: function (data, callback, template) {
+      var fragment = document.createDocumentFragment();
+
+      for (var i = 0; i < data.length; i++) {
+        fragment.appendChild(callback(data[i], template));
+      }
+
+      return fragment;
+    },
   };
 })();
