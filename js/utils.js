@@ -8,6 +8,11 @@
   // ---------------
   var ENTER_KEYCODE = 13;
   var ESC_KEYCODE = 27;
+  var DEBOUNCE_INTERVAL = 500;
+
+  // Переменные
+  // ---------------
+  var lastTimeout = null;
 
   // Экспорт
   // ---------------
@@ -85,5 +90,12 @@
 
       return fragment;
     },
+    debounce: function (callback) {
+      if (lastTimeout) {
+        clearTimeout(lastTimeout);
+      }
+
+      lastTimeout = setTimeout(callback, DEBOUNCE_INTERVAL);
+    }
   };
 })();

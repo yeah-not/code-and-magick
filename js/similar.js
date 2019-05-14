@@ -96,6 +96,7 @@
   // ---------------
   var loadHandler = function (data) {
     wizards = data;
+
     updateSimilar();
   };
 
@@ -107,11 +108,11 @@
     switch (element.classList[0]) {
       case 'wizard-coat':
         coatColor = color;
-        updateSimilar();
+        window.util.debounce(updateSimilar);
         break;
       case 'wizard-eyes':
         eyesColor = color;
-        updateSimilar();
+        window.util.debounce(updateSimilar);
         break;
       default:
     }
