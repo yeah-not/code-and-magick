@@ -96,7 +96,6 @@
   // ---------------
   var loadHandler = function (data) {
     wizards = data;
-
     updateSimilar();
   };
 
@@ -118,12 +117,6 @@
     }
   };
 
-  // Переменные
-  // ---------------
-  var wizards = [];
-  var coatColor = window.data.wizardDefault.colorCoat;
-  var eyesColor = window.data.wizardDefault.colorEyes;
-
   // Элементы
   // ---------------
   var similarContainer = document.querySelector('.setup-similar');
@@ -131,11 +124,18 @@
   var errorElement = document.querySelector('.setup-similar-error');
   var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 
+  // Переменные
+  // ---------------
+  var wizards = [];
+  var coatColor = window.data.wizardDefault.colorCoat;
+  var eyesColor = window.data.wizardDefault.colorEyes;
+
   // Экспорт
   // ---------------
   window.similar = {
     init: function () {
       // wizards = generateWizards(window.data.wizardsNum, window.data.wizards);
+      // updateSimilar();
       window.backend.load(loadHandler, errorHandler);
     }
   };

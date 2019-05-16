@@ -6,8 +6,10 @@
 (function () {
   // Константы
   // ---------------
-  var ENTER_KEYCODE = 13;
-  var ESC_KEYCODE = 27;
+  var KeyCode = {
+    ENTER: 13,
+    ESC: 27,
+  };
   var DEBOUNCE_INTERVAL = 500;
 
   // Переменные
@@ -18,12 +20,12 @@
   // ---------------
   window.util = {
     isEscEvent: function (evt, action) {
-      if (evt.keyCode === ESC_KEYCODE) {
+      if (evt.keyCode === KeyCode.ESC) {
         action();
       }
     },
     isEnterEvent: function (evt, action) {
-      if (evt.keyCode === ENTER_KEYCODE) {
+      if (evt.keyCode === KeyCode.ENTER) {
         action();
       }
     },

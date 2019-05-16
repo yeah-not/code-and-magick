@@ -137,23 +137,22 @@
   var userName = setupDialog.querySelector('.setup-user-name');
   var handle = setupDialog.querySelector('.upload');
 
-  // Старт
+  // Переменные
   // ---------------
   var dragged = false;
   var mouseCoords = {};
   var startCoords = {};
 
+  // Старт
+  // ---------------
   setupOpen.addEventListener('click', setupOpenClickHandler);
   setupOpen.addEventListener('keydown', setupOpenEnterPressHandler);
 
-  // События открытия/закрытия
+  // Экспорт
+  // ---------------
   var dialog = {
     onOpened: function () {},
     onClosed: function () {}
   };
-
-  // Экспорт
-  // ---------------
   window.dialog = dialog;
-
 })();
