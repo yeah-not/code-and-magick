@@ -29,6 +29,8 @@
     if (colorInput) {
       colorInput.value = color;
     }
+
+    window.colorization.onChange(element, color);
   };
 
   // Обрабочики
@@ -45,6 +47,9 @@
     },
     remove: function (element) {
       element.removeEventListener('click', elementClickHandler);
+    },
+    onChange: function (element, color) {
+      return color;
     }
   };
 

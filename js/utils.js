@@ -6,19 +6,26 @@
 (function () {
   // Константы
   // ---------------
-  var ENTER_KEYCODE = 13;
-  var ESC_KEYCODE = 27;
+  var KeyCode = {
+    ENTER: 13,
+    ESC: 27,
+  };
+  var DEBOUNCE_INTERVAL = 500;
+
+  // Переменные
+  // ---------------
+  var lastTimeout = null;
 
   // Экспорт
   // ---------------
   window.util = {
     isEscEvent: function (evt, action) {
-      if (evt.keyCode === ESC_KEYCODE) {
+      if (evt.keyCode === KeyCode.ESC) {
         action();
       }
     },
     isEnterEvent: function (evt, action) {
-      if (evt.keyCode === ENTER_KEYCODE) {
+      if (evt.keyCode === KeyCode.ENTER) {
         action();
       }
     },
@@ -70,6 +77,27 @@
     },
     show: function (el) {
       el.classList.remove('hidden');
+    },
+    removeChildren: function (el) {
+      while (el.firstChild) {
+        el.removeChild(el.firstChild);
+      }
+    },
+    makeFragment: function (data, callback, template) {
+      var fragment = document.createDocumentFragment();
+
+      for (var i = 0; i < data.length; i++) {
+        fragment.appendChild(callback(data[i], template));
+      }
+
+      return fragment;
+    },
+    debounce: function (callback) {
+      if (lastTimeout) {
+        clearTimeout(lastTimeout);
+      }
+
+      lastTimeout = setTimeout(callback, DEBOUNCE_INTERVAL);
     }
   };
 })();

@@ -42,22 +42,46 @@
     return wizardElement;
   };
 
-  var renderWizards = function (wizards, amount, template) {
-    var fragment = document.createDocumentFragment();
+  var renderWizards = function (data, amount, template) {
+    var similarList = window.util.makeFragment(data.slice(0, amount), renderWizard, template);
 
-    for (var i = 0; i < amount; i++) {
-      fragment.appendChild(renderWizard(wizards[i], template));
+    window.util.removeChildren(similarListElement);
+    similarListElement.appendChild(similarList);
+  };
+
+  // Сортировка
+  var getRank = function (wizard) {
+    var rank = 0;
+
+    if (wizard.colorCoat === coatColor) {
+      rank += 2;
     }
 
-    return fragment;
+    if (wizard.colorEyes === eyesColor) {
+      rank += 1;
+    }
+
+    return rank;
+  };
+
+  var compareWizards = function (left, right) {
+    var rankDiff = getRank(right) - getRank(left);
+    return rankDiff === 0 ? compareNames(left.name, right.name) : rankDiff;
+  };
+
+  var compareNames = function (leftName, rightName) {
+    if (leftName > rightName) {
+      return 1;
+    } else if (leftName < rightName) {
+      return -1;
+    } else {
+      return 0;
+    }
   };
 
   // Загрузка и Отображение
-  var loadSimilar = function (wizards) {
-    // var wizards = generateWizards(window.data.wizardsNum, window.data.wizards);
-    var wizardsList = renderWizards(wizards, window.data.wizardsNum, similarWizardTemplate);
-    similarListElement.appendChild(wizardsList);
-
+  var updateSimilar = function () {
+    renderWizards(wizards.sort(compareWizards), window.data.wizardsNum, similarWizardTemplate);
     window.util.hide(errorElement);
     window.util.show(similarContainer);
   };
@@ -71,11 +95,26 @@
   // Обаботчики
   // ---------------
   var loadHandler = function (data) {
-    loadSimilar(data);
+    wizards = data;
+    updateSimilar();
   };
 
   var errorHandler = function (message) {
     showError(message);
+  };
+
+  window.colorization.onChange = function (element, color) {
+    switch (element.classList[0]) {
+      case 'wizard-coat':
+        coatColor = color;
+        window.util.debounce(updateSimilar);
+        break;
+      case 'wizard-eyes':
+        eyesColor = color;
+        window.util.debounce(updateSimilar);
+        break;
+      default:
+    }
   };
 
   // Элементы
@@ -85,10 +124,18 @@
   var errorElement = document.querySelector('.setup-similar-error');
   var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 
+  // Переменные
+  // ---------------
+  var wizards = [];
+  var coatColor = window.data.wizardDefault.colorCoat;
+  var eyesColor = window.data.wizardDefault.colorEyes;
+
   // Экспорт
   // ---------------
   window.similar = {
     init: function () {
+      // wizards = generateWizards(window.data.wizardsNum, window.data.wizards);
+      // updateSimilar();
       window.backend.load(loadHandler, errorHandler);
     }
   };
