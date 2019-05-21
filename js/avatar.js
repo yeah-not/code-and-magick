@@ -10,15 +10,7 @@
 
   // Обработчики
   // ---------------
-
-  // Элементы
-  // ---------------
-  var fileChooser = document.querySelector('.upload input[type=file]');
-  var preview = document.querySelector('.setup-user-pic');
-
-  // Старт
-  // ---------------
-  fileChooser.addEventListener('change', function () {
+  var fileChooserChangeHandler =  function () {
     var file = fileChooser.files[0];
 
     if (file) {
@@ -32,14 +24,25 @@
     if (matches) {
       var fileReader = new FileReader();
 
-      fileReader.addEventListener('load', function () {
-        preview.src = fileReader.result;
-        // console.log(fileReader);
-      });
+      fileReader.addEventListener('load', fileReaderLoadHandler);
 
       fileReader.readAsDataURL(file);
     }
 
-  });
+  };
+
+  var fileReaderLoadHandler = function (evt) {
+    var fileReader = evt.currentTarget;
+    preview.src = fileReader.result;
+  }
+
+  // Элементы
+  // ---------------
+  var fileChooser = document.querySelector('.upload input[type=file]');
+  var preview = document.querySelector('.setup-user-pic');
+
+  // Старт
+  // ---------------
+  fileChooser.addEventListener('change', fileChooserChangeHandler);
 
 })();
