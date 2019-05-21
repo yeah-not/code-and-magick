@@ -8,9 +8,9 @@
   // ---------------
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
-  // Обработчики
+  // Функции
   // ---------------
-  var fileChooserChangeHandler =  function () {
+  var chooseFile = function () {
     var file = fileChooser.files[0];
 
     if (file) {
@@ -21,20 +21,38 @@
       });
     }
 
-    if (matches) {
-      var fileReader = new FileReader();
-
-      fileReader.addEventListener('load', fileReaderLoadHandler);
-
-      fileReader.readAsDataURL(file);
+    if (!matches) {
+      file = undefined;
     }
 
+    return file;
+  };
+
+  var readFile  = function (file) {
+    if (!file) {
+      return false;
+    }
+
+    var fileReader = new FileReader();
+
+    fileReader.addEventListener('load', fileReaderLoadHandler);
+
+    fileReader.readAsDataURL(file);
+  };
+
+  var setPreview = function (fileReader) {
+    preview.src = fileReader.result;
+  };
+
+  // Обработчики
+  // ---------------
+  var fileChooserChangeHandler =  function () {
+    readFile(chooseFile());
   };
 
   var fileReaderLoadHandler = function (evt) {
-    var fileReader = evt.currentTarget;
-    preview.src = fileReader.result;
-  }
+    setPreview(evt.currentTarget);
+  };
 
   // Элементы
   // ---------------
