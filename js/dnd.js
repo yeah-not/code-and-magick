@@ -5,6 +5,10 @@
 // ---------------
 
 (function () {
+  var isElementEmpty = function (element) {
+    return element.childNodes.length === 0;
+  }
+
   // Обработчики
   // ---------------
   var shopDragStartHandler = function (evt) {
@@ -27,13 +31,16 @@
   };
 
   var artifactsDropHandler = function (evt) {
-    if (!dragItem) {
+    if (!dragItem || !isElementEmpty(evt.target)) {
+      dragItem = null;
+
       evt.preventDefault();
       return false;
     }
 
     var dropItem = dragItem.cloneNode(true);
     dragItem = null;
+    // console.log(dropItem.draggable = false);
 
     evt.target.appendChild(dropItem);
     evt.target.classList.remove('drag-over');
@@ -43,7 +50,7 @@
   var artifactsDragEnter = function (evt) {
     evt.preventDefault();
 
-    if (!dragItem) {
+    if (!dragItem || !isElementEmpty(evt.target)) {
       return false;
     }
 
@@ -73,5 +80,4 @@
   artifactsElement.addEventListener('drop', artifactsDropHandler);
   artifactsElement.addEventListener('dragenter', artifactsDragEnter);
   artifactsElement.addEventListener('dragleave', artifactsDragLeave);
-
 })();
