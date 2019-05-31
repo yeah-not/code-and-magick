@@ -1,7 +1,7 @@
 'use strict';
 
-// Drag'n'Drop API
 // Магазин артефактов в окне настройки
+// Drag'n'Drop API
 // ---------------
 
 (function () {
@@ -11,32 +11,45 @@
     var target = evt.target;
 
     evt.dataTransfer.setData('text/plain', target.alt);
+    setDropEffect(target, evt);
     toggleArtifactsHighlight(true);
 
-    artifactsElement.addEventListener('dragover', artifactsDragOverHanlder);
     artifactsElement.addEventListener('drop', artifactsDropHandler);
+    artifactsElement.addEventListener('dragover', artifactsDragOverHanlder);
     artifactsElement.addEventListener('dragenter', artifactsDragEnter);
     artifactsElement.addEventListener('dragleave', artifactsDragLeave);
+
+    if (!target.closest(shopSelector)) {
+      document.addEventListener('drop', documentDropHandler);
+      document.addEventListener('dragover', documentDragOverHanlder);
+    }
 
     return target;
   };
 
   var dropArtifact = function (target) {
+    artifactsElement.removeEventListener('drop', artifactsDropHandler);
+    artifactsElement.removeEventListener('dragover', artifactsDragOverHanlder);
+    artifactsElement.removeEventListener('dragenter', artifactsDragEnter);
+    artifactsElement.removeEventListener('dragleave', artifactsDragLeave);
+    document.removeEventListener('drop', documentDropHandler);
+    document.removeEventListener('dragover', documentDragOverHanlder);
+
+    toggleArtifactsHighlight(false);
+
     var dropItem = dragItem;
 
     if (dragItem.closest(shopSelector)) {
       dropItem = dragItem.cloneNode(true);
     }
 
+    if (target === document) {
+      dropItem.remove();
+      return null;
+    }
+
     target.appendChild(dropItem);
-
     toggleCellHighlight(target, false);
-    toggleArtifactsHighlight(false);
-
-    artifactsElement.removeEventListener('dragover', artifactsDragOverHanlder);
-    artifactsElement.removeEventListener('drop', artifactsDropHandler);
-    artifactsElement.removeEventListener('dragenter', artifactsDragEnter);
-    artifactsElement.removeEventListener('dragleave', artifactsDragLeave);
 
     return null;
   };
@@ -57,6 +70,14 @@
     }
   };
 
+  var setDropEffect = function (item, evt) {
+    if (item.closest(shopSelector)) {
+      evt.dataTransfer.dropEffect = 'copy';
+    } else {
+      evt.dataTransfer.dropEffect = 'move';
+    }
+  };
+
   // Обработчики
   // ---------------
   var shopDragStartHandler = function (evt) {
@@ -72,20 +93,23 @@
   };
 
   var artifactsDropHandler = function (evt) {
-    if (dragItem && window.util.isElementEmpty(evt.target)) {
-      dragItem = dropArtifact(evt.target);
+    var target = evt.target;
+
+    if (!window.util.isElementTag(target, 'img') && window.util.isElementEmpty(target)) {
+      dragItem = dropArtifact(target);
     }
   };
 
   var artifactsDragOverHanlder = function (evt) {
     evt.preventDefault();
+    setDropEffect(dragItem, evt);
     return false;
   };
 
   var artifactsDragEnter = function (evt) {
     evt.preventDefault();
 
-    if (dragItem && window.util.isElementEmpty(evt.target)) {
+    if (window.util.isElementEmpty(evt.target)) {
       toggleCellHighlight(evt.target, true);
     }
   };
@@ -93,6 +117,15 @@
   var artifactsDragLeave = function (evt) {
     evt.preventDefault();
     toggleCellHighlight(evt.target, false);
+  };
+
+  var documentDropHandler = function (evt) {
+    dragItem = dropArtifact(evt.currentTarget);
+  };
+
+  var documentDragOverHanlder = function (evt) {
+    evt.preventDefault();
+    return false;
   };
 
   // Переменные и Элементы
