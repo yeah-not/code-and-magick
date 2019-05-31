@@ -10,8 +10,8 @@
 
   // Функции
   // ---------------
-  var chooseFile = function () {
-    var file = fileChooser.files[0];
+  var chooseFile = function (files) {
+    var file = files[0];
 
     if (file) {
       var fileName = file.name.toLowerCase();
@@ -47,11 +47,21 @@
   // Обработчики
   // ---------------
   var fileChooserChangeHandler = function () {
-    readFile(chooseFile());
+    readFile(chooseFile(fileChooser.files));
   };
 
   var fileReaderLoadHandler = function (evt) {
     setPreview(evt.currentTarget);
+  };
+
+  var fileChooserDragOverHandler = function (evt) {
+    evt.preventDefault();
+    evt.dataTransfer.dropEffect = 'copy';
+  };
+
+  var fileChooserDropHandler = function (evt) {
+    evt.preventDefault();
+    readFile(chooseFile(evt.dataTransfer.files));
   };
 
   // Элементы
@@ -62,5 +72,7 @@
   // Старт
   // ---------------
   fileChooser.addEventListener('change', fileChooserChangeHandler);
+  fileChooser.addEventListener('dragover', fileChooserDragOverHandler);
+  fileChooser.addEventListener('drop', fileChooserDropHandler);
 
 })();
