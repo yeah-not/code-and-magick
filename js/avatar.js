@@ -28,9 +28,9 @@
     return file;
   };
 
-  var readFile  = function (file) {
+  var readFile = function (file) {
     if (!file) {
-      return false;
+      return;
     }
 
     var fileReader = new FileReader();
@@ -46,7 +46,7 @@
 
   // Обработчики
   // ---------------
-  var fileChooserChangeHandler =  function () {
+  var fileChooserChangeHandler = function () {
     readFile(chooseFile());
   };
 

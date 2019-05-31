@@ -60,6 +60,12 @@
         return m[1].toUpperCase();
       });
     },
+    isElementEmpty: function (element) {
+      return element.childNodes.length === 0;
+    },
+    isElementTag: function (element, tag) {
+      return element.tagName.toLowerCase() === tag;
+    },
     getElementCoords: function (el) {
       var elCoords = {
         x: el.offsetLeft,

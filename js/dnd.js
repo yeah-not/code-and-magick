@@ -5,24 +5,76 @@
 // ---------------
 
 (function () {
-  var isElementEmpty = function (element) {
-    return element.childNodes.length === 0;
-  }
+  // Функции
+  // ---------------
+  var startArtifactDrag = function (evt) {
+    var target = evt.target;
+
+    evt.dataTransfer.setData('text/plain', target.alt);
+    toggleArtifactsHighlight(true);
+
+    artifactsElement.addEventListener('dragover', artifactsDragOverHanlder);
+    artifactsElement.addEventListener('drop', artifactsDropHandler);
+    artifactsElement.addEventListener('dragenter', artifactsDragEnter);
+    artifactsElement.addEventListener('dragleave', artifactsDragLeave);
+
+    return target;
+  };
+
+  var dropArtifact = function (target) {
+    var dropItem = dragItem;
+
+    if (dragItem.closest(shopSelector)) {
+      dropItem = dragItem.cloneNode(true);
+    }
+
+    target.appendChild(dropItem);
+
+    toggleCellHighlight(target, false);
+    toggleArtifactsHighlight(false);
+
+    artifactsElement.removeEventListener('dragover', artifactsDragOverHanlder);
+    artifactsElement.removeEventListener('drop', artifactsDropHandler);
+    artifactsElement.removeEventListener('dragenter', artifactsDragEnter);
+    artifactsElement.removeEventListener('dragleave', artifactsDragLeave);
+
+    return null;
+  };
+
+  var toggleCellHighlight = function (cell, toggleOn) {
+    if (toggleOn) {
+      cell.classList.add('drag-over');
+    } else {
+      cell.classList.remove('drag-over');
+    }
+  };
+
+  var toggleArtifactsHighlight = function (toggleOn) {
+    if (toggleOn) {
+      artifactsElement.classList.add('drag-in-progress');
+    } else {
+      artifactsElement.classList.remove('drag-in-progress');
+    }
+  };
 
   // Обработчики
   // ---------------
   var shopDragStartHandler = function (evt) {
-    var target = evt.target;
-
-    if (target.tagName.toLowerCase() !== 'img') {
-      evt.preventDefault();
-      return false;
+    if (window.util.isElementTag(evt.target, 'img')) {
+      dragItem = startArtifactDrag(evt);
     }
+  };
 
-    dragItem = target;
+  var artifactsDragStartHandler = function (evt) {
+    if (window.util.isElementTag(evt.target, 'img')) {
+      dragItem = startArtifactDrag(evt);
+    }
+  };
 
-    evt.dataTransfer.setData('text/plain', target.alt);
-    artifactsElement.classList.add('drag-in-progress');
+  var artifactsDropHandler = function (evt) {
+    if (dragItem && window.util.isElementEmpty(evt.target)) {
+      dragItem = dropArtifact(evt.target);
+    }
   };
 
   var artifactsDragOverHanlder = function (evt) {
@@ -30,54 +82,28 @@
     return false;
   };
 
-  var artifactsDropHandler = function (evt) {
-    if (!dragItem || !isElementEmpty(evt.target)) {
-      dragItem = null;
-
-      evt.preventDefault();
-      return false;
-    }
-
-    var dropItem = dragItem.cloneNode(true);
-    dragItem = null;
-    // console.log(dropItem.draggable = false);
-
-    evt.target.appendChild(dropItem);
-    evt.target.classList.remove('drag-over');
-    artifactsElement.classList.remove('drag-in-progress');
-  };
-
   var artifactsDragEnter = function (evt) {
     evt.preventDefault();
 
-    if (!dragItem || !isElementEmpty(evt.target)) {
-      return false;
+    if (dragItem && window.util.isElementEmpty(evt.target)) {
+      toggleCellHighlight(evt.target, true);
     }
-
-    evt.target.classList.add('drag-over');
   };
 
   var artifactsDragLeave = function (evt) {
     evt.preventDefault();
-
-    if (!dragItem) {
-      return false;
-    }
-
-    evt.target.classList.remove('drag-over');
+    toggleCellHighlight(evt.target, false);
   };
 
-  // Элементы
+  // Переменные и Элементы
   // ---------------
-  var shopElement = document.querySelector('.setup-artifacts-shop');
+  var shopSelector = '.setup-artifacts-shop';
+  var shopElement = document.querySelector(shopSelector);
   var artifactsElement = document.querySelector('.setup-artifacts');
   var dragItem = null;
 
   // Старт
   // ---------------
   shopElement.addEventListener('dragstart', shopDragStartHandler);
-  artifactsElement.addEventListener('dragover', artifactsDragOverHanlder);
-  artifactsElement.addEventListener('drop', artifactsDropHandler);
-  artifactsElement.addEventListener('dragenter', artifactsDragEnter);
-  artifactsElement.addEventListener('dragleave', artifactsDragLeave);
+  artifactsElement.addEventListener('dragstart', artifactsDragStartHandler);
 })();
